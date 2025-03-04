@@ -1,0 +1,84 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(119, 112, 126);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.watch-container {
+    background-color: rgb(33, 37, 41); /* Dark gray */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    text-align: center;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%; /* Circular shape */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.time-display {
+    font-size: 4rem;
+    font-weight: bold;
+
+    width: 350px;
+    color: #464444;
+    margin-bottom: 20px;
+    border: 4mm ridge rgba(222, 224, 177, 0.6);
+
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-top: 20px;
+}
+
+.button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.button:active {
+    transform: scale(0.95);
+}
+
+.mode-button {
+    background-color: #a3a291;
+}
+
+.light-button {
+    background-color: #a3a291;
+}
+
+.increase-button {
+    background-color: #a3a291;
+}
+
+/* Blinking effect for editable parts */
+.blink {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
