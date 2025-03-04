@@ -1,60 +1,62 @@
 import { TimeModel } from "./TimeModel";
 
-
 /**
- * The main clock model that handles UI state and interacts with the time model.
+ * @class ClockModel
+ * @description The main clock model that handles UI state and interacts with the time model.
  */
 export class ClockModel {
     private timeModel: TimeModel;
     private editMode: 'hours' | 'minutes' | 'none';
     private isLightOn: boolean;
 
-    /**
-     * Initializes the clock model
-     */
-    constructor(initialTime?: Date) {
-        this.timeModel = new TimeModel(initialTime);
+
+    constructor(initialTime?: Date, timezoneOffset: number = 0) {
+        this.timeModel = new TimeModel(initialTime, timezoneOffset);
         this.editMode = 'none';
-        this.isLightOn = true; // Default: light mode is on
+        this.isLightOn = true;
     }
 
-    /**
-     * Gets the current clock time.
-     */
+
     public getTime(): Date {
         return this.timeModel.getTime();
     }
 
     /**
-     * Checks if light mode is currently enabled.
+     * @method isLightModeEnabled
+     * @returns {boolean} Whether light mode is currently enabled.
      */
     public isLightModeEnabled(): boolean {
         return this.isLightOn;
     }
 
     /**
-     * Gets the current edit mode (hours, minutes, or none).
+     * @method getEditMode
+     * @returns {'hours' | 'minutes' | 'none'} The current edit mode (hours, minutes, or none).
      */
     public getEditMode(): 'hours' | 'minutes' | 'none' {
         return this.editMode;
     }
 
     /**
-     * Updates the edit mode, allowing the user to change hours or minutes.
+     * @method setEditMode
+     * @param {'hours' | 'minutes' | 'none'} mode - The edit mode to be set.
+     * @description Updates the edit mode, allowing the user to change hours or minutes.
      */
     public setEditMode(mode: 'hours' | 'minutes' | 'none'): void {
         this.editMode = mode;
     }
 
     /**
-     * Moves the clock forward by one second.
+     * @method progressClock
+     * @description Moves the clock forward by one second.
      */
     public progressClock(): void {
         this.timeModel.progressClock();
     }
 
     /**
-     * Increases the currently selected time unit (hours or minutes).
+     * @method increaseTime
+     * @description Increases the currently selected time unit (hours or minutes).
      */
     public increaseTime(): void {
         if (this.editMode === 'hours') {
@@ -65,9 +67,52 @@ export class ClockModel {
     }
 
     /**
-     * Toggles the light mode of the clock.
+     * @method toggleLightMode
+     * @description Toggles the light mode of the clock.
      */
     public toggleLightMode(): void {
         this.isLightOn = !this.isLightOn;
+    }
+
+    /**
+     * @method setTimezoneOffset
+     * @param {number} offset - The timezone offset in hours (e.g., 1 for GMT+1).
+     * @description Sets the timezone offset for the clock.
+     */
+    public setTimezoneOffset(offset: number): void {
+        this.timeModel.setTimezoneOffset(offset);
+    }
+
+    /**
+     * @method toggleTimeFormat
+     * @description Toggles between 24H and AM/PM time formats.
+     */
+    public toggleTimeFormat(): void {
+        this.timeModel.toggleTimeFormat();
+    }
+
+    /**
+     * @method is24HFormat
+     * @returns {boolean} True if using 24H format, false if using AM/PM.
+     */
+    public is24HFormat(): boolean {
+        return this.timeModel.is24HFormat();
+    }
+
+    /**
+     * @method resetTime
+     * @param {Date} initialTime - The initial time to reset the clock to.
+     * @description Resets the time to the initial time, keeping the timezone and format.
+     */
+    public resetTime(initialTime: Date): void {
+        this.timeModel.resetTime(initialTime);
+    }
+
+    /**
+     * @method getTimezoneOffset
+     * @returns {number} The current timezone offset in hours (e.g., 1 for GMT+1).
+     */
+    public getTimezoneOffset(): number {
+        return this.timeModel.getTimezoneOffset();
     }
 }

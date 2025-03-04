@@ -1,58 +1,47 @@
 import { ClockModel } from "../models/ClockModel";
 import { ClockView } from "../views/ClockView";
 
-/**
- * Manages the clock by handling user actions and updating the display.
- */
+
 export class ClockController {
     private model: ClockModel;
     private view: ClockView;
+    private initialTime: Date;
 
-    /**
-     * Sets up the controller with the clock model and view.
-     * Starts the clock
-     * @param model - The clock's data and logic.
-     * @param view - The clock's UI.
-     */
-    constructor(model: ClockModel, view: ClockView) {
-        this.model = model;
-        this.view = view;
+
+    constructor(id:string, dateTime:Date, timezoneOffset:number) {
+        this.model = new ClockModel(dateTime, timezoneOffset);
+        this.view = new ClockView(id);
+        this.initialTime = new Date(dateTime.getTime());
         this.initClock();
     }
 
-    /**
-     * Starts the clock:
-     * - Listens for button clicks
-     * - Syncs light mode settings
-     * - Updates the display every second
-     */
+    
     public initClock(): void {
         this.view.onModeChange(() => this.changeEditMode());
         this.view.onTimeIncrease(() => this.updateTime());
         this.view.onToggleLight(() => this.toggleLightMode());
+        this.view.onToggleFormat(() => this.toggleTimeFormat());
+        this.view.onResetTime(() => this.resetTime());
+        this.view.onTimezoneChange((offset) => this.updateTimezone(offset));
         this.view.updateLightMode(this.model.isLightModeEnabled());
-        setInterval(() => this.refreshClock(), 1000);
     }
 
-    /**
-     * Updates the clock display every second.
-     */
-    private refreshClock(): void {
+
+    public refreshClock(): void {
+
         this.model.progressClock();
         this.view.updateTimeDisplay(
             this.model.getTime(),
-            this.model.getEditMode()
+            this.model.getEditMode(),
+            this.model.is24HFormat()
         );
     }
 
-    /**
-     * Switches between editing hours, minutes, or turning off edit mode.
-     */
     private changeEditMode(): void {
         const currentMode = this.model.getEditMode();
 
         switch (currentMode) {
-            case 'none': 
+            case 'none':
                 this.model.setEditMode('hours');
                 break;
             case 'hours':
@@ -62,22 +51,54 @@ export class ClockController {
                 this.model.setEditMode('none');
         }
 
-        this.view.updateTimeDisplay(this.model.getTime(), this.model.getEditMode());
+        this.view.updateTimeDisplay(
+            this.model.getTime(),
+            this.model.getEditMode(),
+            this.model.is24HFormat()
+        );
     }
 
-    /**
-     * Increases hours or minutes if they are being edited.
-     */
+
     private updateTime(): void {
         this.model.increaseTime();
-        this.view.updateTimeDisplay(this.model.getTime(), this.model.getEditMode());
+        this.view.updateTimeDisplay(
+            this.model.getTime(),
+            this.model.getEditMode(),
+            this.model.is24HFormat()
+        );
     }
 
-    /**
-     * Turns light mode on or off.
-     */
     private toggleLightMode(): void {
         this.model.toggleLightMode();
         this.view.updateLightMode(this.model.isLightModeEnabled());
     }
+
+    private toggleTimeFormat(): void {
+        this.model.toggleTimeFormat();
+        this.view.updateTimeDisplay(
+            this.model.getTime(),
+            this.model.getEditMode(),
+            this.model.is24HFormat()
+        );
+    }
+
+    private resetTime(): void {
+        this.model.resetTime(this.initialTime);
+        this.view.updateTimeDisplay(
+            this.model.getTime(),
+            this.model.getEditMode(),
+            this.model.is24HFormat()
+        );
+    }
+
+    private updateTimezone(offset: number): void {
+        this.model.setTimezoneOffset(offset);
+        this.view.updateTimeDisplay(
+            this.model.getTime(),
+            this.model.getEditMode(),
+            this.model.is24HFormat()
+        );
+    }
+
+    
 }

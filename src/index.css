@@ -1,78 +1,209 @@
-/* styles.css */
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: rgb(119, 112, 126);
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #12122b, #3c3c56);
+    color: white;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
     margin: 0;
+    text-align: center;
+}
+
+header {
+    width: 100%;
+    padding: 20px 0;
+}
+
+.main-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #ff6f61, #625bff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+.clock-frame {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    position: relative;
+    margin: 15px;
 }
 
 .watch-container {
-    background-color: rgb(33, 37, 41); /* Dark gray */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    text-align: center;
-    width: 500px;
-    height: 500px;
-    border-radius: 50%; /* Circular shape */
+    position: relative;
+    background: radial-gradient(circle, #625bff 0%, #3c3c56 100%);
+    width: 350px;
+    height: 356px;
+    border-radius: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    margin: 40px;
 }
 
 .time-display {
-    font-size: 4rem;
+    font-size: 2rem;
     font-weight: bold;
-
-    width: 350px;
-    color: #464444;
+    background: white;
+    color: #222;
+    padding: 15px 30px;
     margin-bottom: 20px;
-    border: 4mm ridge rgba(222, 224, 177, 0.6);
-
+    border-radius: 10px;
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
-.buttons {
+
+.button-container {
     display: flex;
-    justify-content: space-between;
-    width: 80%;
-    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.button-container span {
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
 }
 
 .button {
-    background-color: #007bff;
+    background: linear-gradient(135deg, #2c3e50, #4ca1af);
     color: white;
+    font-weight: bold;
     border: none;
-    border-radius: 10px;
-    padding: 10px 20px;
+    border-radius: 50%;
+    width: 40px;
+    height: 20px;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
 }
 
 .button:hover {
-    background-color: #0056b3;
+    transform: scale(1.1);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
 }
 
-.button:active {
-    transform: scale(0.95);
+.reset-button button {
+    background: linear-gradient(135deg, #145208, #145208);
+    border-radius: 20px 20px 0 0;
+    width: 75px;
+    height: 25px;
 }
 
-.mode-button {
-    background-color: #a3a291;
+.reset-button button:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
 }
 
-.light-button {
-    background-color: #a3a291;
+.increase-button button {
+    background: linear-gradient(135deg, #b7b946, #b7b946);
+    border-radius: 20px 20px 0 0;
+    width: 75px;
+    height: 25px;
+}
+
+increase-button button:hover {
+    background: linear-gradient(135deg, #4be78c, #1e8449);
+}
+
+.light-button button {
+    background: linear-gradient(135deg, #fcff62b9, #b7b946); 
+    border-radius: 20px 20px 0 0;
+    width: 75px;
+    height: 25px;
+}
+
+.light-button button:hover {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+}
+
+.mode-button button {
+    background: linear-gradient(135deg, #b7b946, #b7b946); 
+    border-radius: 20px 20px 0 0;
+    width: 75px;
+    height: 25px;
+}
+
+.mode-button button:hover {
+    background: linear-gradient(135deg, #732d91, #7d3c98);
+}
+
+
+.format-button button {
+    background: linear-gradient(135deg, #145208, #145208); 
+    border-radius: 20px 20px 0 0;
+    width: 75px;
+    height: 25px;
+}
+
+.format-button button:hover {
+    background: linear-gradient(135deg, #1f618d, #154360);
+}
+
+.remove-button  { 
+    background: linear-gradient(135deg, #ff4757, #ff6b81);
+    position: absolute;
+    top: -7%;
+    left: 99%;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.remove-button:hover {
+    background: linear-gradient(135deg, #d63031, #e74c3c);
+}
+.format-button {
+    position: absolute;
+    left: 97%;
+    top: 39%;
+    transform: rotate(90deg);
 }
 
 .increase-button {
-    background-color: #a3a291;
+    position: absolute;
+    top: 86%;
+    left: 71%;
+    transform: rotate(144deg);
 }
 
-/* Blinking effect for editable parts */
+.light-button {
+    position: absolute;
+    top: 83%;
+    left: 3%;
+    transform: rotate(221deg);
+}
+
+.reset-button {
+    position: absolute;
+    top: 8%;
+    left: -6%;
+    transform: rotate(-54deg);
+}
+
+.mode-button {
+    position: absolute;
+    top: 2%;
+    left: 80%;
+    transform: rotate(45deg);
+}
+
 .blink {
     animation: blink 1s infinite;
 }
@@ -81,4 +212,57 @@ body {
     50% {
         opacity: 0;
     }
+}
+
+
+
+.timezone-selector {
+    background: #2c2c54;
+    color: #f5f6fa;
+    border: 2px solid #7158e2;
+    padding: 6px 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(113, 88, 226, 0.3);
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.timezone-selector:hover {
+    background: #4834d4;
+    border-color: #a29bfe;
+    box-shadow: 0 6px 15px rgba(162, 155, 254, 0.4);
+}
+
+
+.timezone-selector:focus {
+    border-color: #ff9f43; 
+    box-shadow: 0 0 10px rgba(255, 159, 67, 0.6);
+    background: #341f97; 
+}
+
+
+.timezone-selector option {
+    background: #130f40; 
+    color: #f5f6fa; 
+    font-size: 1rem;
+    padding: 8px;
+    border-bottom: 1px solid #7158e2;
+}
+
+.timezone-selector option:hover {
+    background: #6c5ce7;
+    color: #fff;
+}
+
+.btn-default {
+    background-color: #04AA6D; 
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }

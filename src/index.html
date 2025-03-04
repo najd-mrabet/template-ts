@@ -4,32 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%= htmlWebpackPlugin.options.title %>
-    </title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Clock Interface</title>
 </head>
 
 <body>
-    <div class="watch-container">
-        <!-- Time Display -->
-        <div class="time-display">
-            <div id="time">
-                <span id="hourDisplay">00</span>:
-                <span id="minuteDisplay">00</span>:
-                <span id="secondDisplay">00</span>
-            </div>
 
-        </div>
+    <!-- General Title -->
+    <header>
+        <h1 class="main-title">GEH TEST</h1>
+    </header>
 
-        <!-- Control Buttons -->
-        <div class="buttons">
-            <button id="lightButton" class="button light-button" aria-label="Toggle light mode">Light</button>
-            <button id="modeButton" class="button mode-button" aria-label="Change editable time unit">Mode</button>
-            <button id="increaseButton" class="button increase-button"
-                aria-label="Increase selected time unit">Increase</button>
-        </div>
+    <button id="addClockButton" class="btn-default" aria-label="Add clock">Add</button>
+
+    <div id="clocksContainer">
+
     </div>
+
 </body>
 
 </html>

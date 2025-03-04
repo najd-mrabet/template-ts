@@ -1,68 +1,91 @@
 /**
- * Manages the clock's UI and handles user interactions.
+ * @class ClockView
+ * @description Manages the clock's UI and handles user interactions.
  */
 export class ClockView {
     private timeElement: HTMLElement;
     private modeButton: HTMLElement;
     private increaseButton: HTMLElement;
     private lightButton: HTMLElement;
+    private timezoneSelector: HTMLSelectElement;
+    private formatButton: HTMLElement;
+    private resetButton: HTMLElement;
+    private idClockElement: string;
 
-    /**
-     * Finds the UI elements when the view is created.
-     */
-    constructor() {
-        this.timeElement = document.getElementById('time')!;
-        this.modeButton = document.getElementById('modeButton')!;
-        this.increaseButton = document.getElementById('increaseButton')!;
-        this.lightButton = document.getElementById('lightButton')!;
+    constructor(id: string) {
+        this.timeElement = document.getElementById(`time-${id}`)!;
+        this.modeButton = document.getElementById(`modeButton-${id}`)!;
+        this.increaseButton = document.getElementById(`increaseButton-${id}`)!;
+        this.lightButton = document.getElementById(`lightButton-${id}`)!;
+        this.timezoneSelector = document.getElementById(`timezoneSelect-${id}`)! as HTMLSelectElement;
+        this.formatButton = document.getElementById(`toggleFormatButton-${id}`)!;
+        this.resetButton = document.getElementById(`resetButton-${id}`)!;
+        this.idClockElement = id;
     }
 
-    /**
-     * Runs the function when the mode button is clicked.
-     * @param handler - What should happen when the button is clicked.
-     */
     public onModeChange(handler: () => void): void {
         this.modeButton.addEventListener('click', handler);
     }
 
-    /**
-     * Runs a function when the increase button is clicked.
-     * @param handler - What should happen when the button is clicked.
-     */
+
     public onTimeIncrease(handler: () => void): void {
         this.increaseButton.addEventListener('click', handler);
     }
 
-    /**
-     * Runs a function when the light mode button is clicked.
-     * @param handler - What should happen when the button is clicked.
-     */
+
     public onToggleLight(handler: () => void): void {
         this.lightButton.addEventListener('click', handler);
     }
 
-    /**
-     * Changes the background color based on light mode.
-     * @param isLightOn - If `true`, sets a bright background; otherwise, uses a white background.
-     */
+
+    public onToggleFormat(handler: () => void): void {
+        this.formatButton.addEventListener('click', handler);
+    }
+
+
+    public onResetTime(handler: () => void): void {
+        this.resetButton.addEventListener('click', handler);
+    }
+
+
+    public onTimezoneChange(handler: (offset: number) => void): void {
+        this.timezoneSelector.addEventListener('change', () => {
+            const offset = parseInt(this.timezoneSelector.value, 10);
+            handler(offset);
+        });
+    }
+
+    public resetTimezoneSelector(defaultOffset: number): void {
+        this.timezoneSelector.value = defaultOffset.toString();
+    }
+
     public updateLightMode(isLightOn: boolean): void {
         this.timeElement.style.backgroundColor = isLightOn ? '#FBE106' : '#FFFFFF';
     }
 
-    /**
-     * Updates the time on the screen and highlights the part that can be edited.
-     */
-    public updateTimeDisplay(time: Date, editMode: 'hours' | 'minutes' | 'none'): void {
-        const hoursElement = document.getElementById("hourDisplay");
-        const minutesElement = document.getElementById("minuteDisplay");
-        const secondsElement = document.getElementById("secondDisplay");
-    
-        if (!hoursElement || !minutesElement || !secondsElement) return;
 
-        hoursElement.textContent = this.formatTimeUnit(time.getHours());
+    public updateTimeDisplay(time: Date, editMode: 'hours' | 'minutes' | 'none', is24HFormat: boolean): void {
+        const hoursElement = document.getElementById(`hourDisplay-${this.idClockElement}`);
+        const minutesElement = document.getElementById(`minuteDisplay-${this.idClockElement}`);
+        const secondsElement = document.getElementById(`secondDisplay-${this.idClockElement}`);
+        const ampmElement = document.getElementById(`ampmDisplay-${this.idClockElement}`);
+
+    
+        if (!hoursElement || !minutesElement || !secondsElement || !ampmElement) return;
+    
+        let hours = time.getHours();
+        let ampm = "";
+    
+        if (!is24HFormat) {
+            ampm = hours >= 12 ? "PM" : "AM";
+            hours = hours % 12 || 12;
+        }
+    
+        hoursElement.textContent = this.formatTimeUnit(hours);
         minutesElement.textContent = this.formatTimeUnit(time.getMinutes());
         secondsElement.textContent = this.formatTimeUnit(time.getSeconds());
-
+        ampmElement.textContent = ampm;
+    
         hoursElement.classList.remove("blink");
         minutesElement.classList.remove("blink");
     
@@ -72,11 +95,7 @@ export class ClockView {
             minutesElement.classList.add("blink");
         }
     }
-    /**
-     * Makes sure hours, minutes, and seconds always have two digits.
-     * @param unit - A number (hours, minutes, or seconds).
-     * @returns The number as a two-digit string.
-     */
+
     private formatTimeUnit(unit: number): string {
         return unit < 10 ? `0${unit}` : `${unit}`;
     }
