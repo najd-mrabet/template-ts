@@ -8,8 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('addClockButton')!.addEventListener('click', () => {
         const clockId = `clock-${clockCount++}`;
-        const timezoneOffset = parseInt(prompt("Enter timezone offset (e.g., 0 for GMT+0, 1 for GMT+1):") || "0", 10);
-
+        let timezoneOffset = parseInt(prompt("Enter timezone offset (e.g., 0 for GMT+0, 1 for GMT+1):") || "0", 10);
+        if (isNaN(timezoneOffset) || timezoneOffset < -12 || timezoneOffset > 14) {
+            timezoneOffset = 0;
+        }
+        
         // Add the clock's HTML structure to the DOM
         const clockHTML = `
             <div class="clock-frame" id="${clockId}">
