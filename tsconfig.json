@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "strict": true,
     "jsx": "react",
-    "allowJs": true
+    "allowJs": true,
+    "esModuleInterop": true,
   }
 }
