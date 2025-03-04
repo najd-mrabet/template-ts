@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
+    "forceConsistentCasingInFileNames": true,
     "noImplicitAny": true,
     "module": "es6",
     "target": "es5",
     "moduleResolution": "node",
+    "strict": true,
     "jsx": "react",
     "allowJs": true
   }
